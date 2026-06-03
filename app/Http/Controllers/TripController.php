@@ -16,28 +16,16 @@ class TripController extends Controller
 
     public function store(Request $request)
     {
-        // 1. Validate request
         $request->validate([
             'destination' => 'required|string',
             'travel_date' => 'required|date',
             'days' => 'required|integer',
             'people' => 'required|integer',
             'budget' => 'required|numeric',
+            'category' => 'required|string',
         ]);
 
-        // 2. Save trip
-        $trip = Trip::create([
-            'user_id' => Auth::id(),
-            'destination' => $request->destination,
-            'travel_date' => $request->travel_date,
-            'days' => $request->days,
-            'people' => $request->people,
-            'budget' => $request->budget,
-        ]);
-
-        // 3. Generate AI plan using GROQ
         try {
-
             $preferences = "Number of travelers: " . $request->people;
 
             $ai = app(GroqService::class)->generateTrip(
@@ -48,21 +36,45 @@ class TripController extends Controller
             );
 
         } catch (\Throwable $e) {
-
             $ai = "AI Error: " . $e->getMessage();
-
         }
 
-        // 4. Send to view
-        return redirect('/trip')->with('ai_plan', $ai);
+        $trip = Trip::create([
+            'user_id' => Auth::id(),
+            'destination' => $request->destination,
+            'travel_date' => $request->travel_date,
+            'days' => $request->days,
+            'people' => $request->people,
+            'budget' => $request->budget,
+            'category' => $request->category,
+            'ai_plan' => $ai,
+        ]);
+
+        return redirect('/trip')->with([
+    'ai_plan' => $ai,
+    'trip_id' => $trip->id,
+]);
     }
 
     public function myTrips()
-{
-    $trips = Trip::where('user_id', Auth::id())
-        ->latest()
-        ->get();
+    {
+        $trips = Trip::where('user_id', Auth::id())
+            ->latest()
+            ->get();
 
-    return view('my-trips', compact('trips'));
-}
+        return view('my-trips', compact('trips'));
+    }
+
+    public function download($id)
+    {
+        $trip = Trip::findOrFail($id);
+
+        $content = $trip->ai_plan ?? 'No itinerary found';
+
+        $fileName = 'trip-' . preg_replace('/[^A-Za-z0-9\-]/', '_', $trip->destination) . '.txt';
+
+        return response($content)
+            ->header('Content-Type', 'text/plain')
+            ->header('Content-Disposition', 'attachment; filename="'.$fileName.'"');
+    }
 }
