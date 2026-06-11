@@ -7,7 +7,52 @@
 
     @vite(['resources/css/app.css','resources/js/app.js'])
 </head>
+<!-- DELETE ACCOUNT MODAL -->
+ 
+<div id="deleteModal"
+     class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
 
+    <div class="bg-gray-900 p-8 rounded-3xl w-full max-w-md border border-red-500">
+
+        <h2 class="text-2xl font-bold text-red-400 mb-4">
+            Delete Account
+        </h2>
+
+        <p class="text-gray-300 mb-6">
+            This action cannot be undone.
+        </p>
+
+        <form method="POST" action="{{ route('profile.destroy') }}">
+            @csrf
+            @method('DELETE')
+
+            <input
+                type="password"
+                name="password"
+                required
+                placeholder="Enter your password"
+                class="w-full p-3 rounded-xl bg-gray-800 border border-gray-700 mb-4">
+
+            <div class="flex gap-4">
+
+                <button type="submit"
+                        class="bg-red-600 px-5 py-3 rounded-xl">
+                    Delete
+                </button>
+
+                <button type="button"
+                        onclick="document.getElementById('deleteModal').classList.add('hidden')"
+                        class="bg-gray-700 px-5 py-3 rounded-xl">
+                    Cancel
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
 <body class="bg-gray-950 text-white min-h-screen">
     
 <!-- NAVBAR -->
@@ -87,6 +132,65 @@
         </a>
 
     </div>
+    <!-- PROFILE SECTION -->
+<div class="mt-16">
+
+    <h2 class="text-3xl font-bold mb-6 text-blue-400">
+        👤 My Profile
+    </h2>
+
+    <div class="bg-white/5 border border-white/10 rounded-3xl p-8">
+
+        <div class="grid md:grid-cols-2 gap-6">
+
+            <div>
+                <p class="text-gray-400">Name</p>
+                <p class="text-xl font-semibold">
+                    {{ auth()->user()->name }}
+                </p>
+            </div>
+
+            <div>
+                <p class="text-gray-400">Email</p>
+                <p class="text-xl font-semibold">
+                    {{ auth()->user()->email }}
+                </p>
+            </div>
+
+            <div>
+                <p class="text-gray-400">Member Since</p>
+                <p class="text-xl font-semibold">
+                    {{ auth()->user()->created_at->format('d M Y') }}
+                </p>
+            </div>
+
+            <div>
+                <p class="text-gray-400">Status</p>
+                <p class="text-green-400 font-semibold">
+                    Active
+                </p>
+            </div>
+
+        </div>
+
+        <div class="mt-8 flex gap-4">
+
+            <a href="{{ route('profile.edit') }}"
+               class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-xl font-bold">
+                Edit Profile
+            </a>
+
+            <button
+                onclick="document.getElementById('deleteModal').classList.remove('hidden')"
+                class="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-xl font-bold">
+                Delete Account
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
 </div>
 

@@ -6,6 +6,7 @@ use App\Models\Trip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\GroqService;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TripController extends Controller
 {
@@ -66,15 +67,17 @@ class TripController extends Controller
     }
 
     public function download($id)
-    {
-        $trip = Trip::findOrFail($id);
+{
+    $trip = Trip::findOrFail($id);
 
-        $content = $trip->ai_plan ?? 'No itinerary found';
+    $pdf = Pdf::loadView('trip-pdf', [
+        'trip' => $trip
+    ]);
 
-        $fileName = 'trip-' . preg_replace('/[^A-Za-z0-9\-]/', '_', $trip->destination) . '.txt';
+    $fileName = 'trip-' .
+        preg_replace('/[^A-Za-z0-9\-]/', '_', $trip->destination)
+        . '.pdf';
 
-        return response($content)
-            ->header('Content-Type', 'text/plain')
-            ->header('Content-Disposition', 'attachment; filename="'.$fileName.'"');
-    }
+    return $pdf->download($fileName);
+}
 }

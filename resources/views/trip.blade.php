@@ -11,6 +11,7 @@
 <body class="min-h-screen bg-cover bg-center"
       style="background-image:url('{{ asset('images/bg.jpg') }}')">
 
+
 <div class="min-h-screen bg-black/60 flex items-center justify-center p-6">
 
     <div class="w-full max-w-6xl grid md:grid-cols-2 gap-8">
