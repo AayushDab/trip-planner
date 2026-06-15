@@ -11,7 +11,7 @@
 <body class="bg-gray-950 text-white">
 
 <!-- NAVBAR -->
-<div class="space-x-8 mt-5 mb-5 px-6">
+<div class="flex flex-wrap items-center gap-4 mt-5 mb-5 px-4 md:px-6">
 
     <a href="/" class="hover:text-blue-400">Home</a>
 
@@ -44,24 +44,23 @@
     <!-- Background Effects -->
     <div class="absolute w-96 h-96 bg-blue-500/20 rounded-full blur-3xl top-20 left-10"></div>
     <div class="absolute w-96 h-96 bg-purple-500/20 rounded-full blur-3xl bottom-10 right-10"></div>
-
-    <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center px-10 relative z-10">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center px-4 md:px-10 relative z-10">
 
         <!-- LEFT SIDE -->
         <div>
 
-            <h1 class="text-7xl font-extrabold leading-tight mb-8">
+            <h1 class="text-4xl md:text-7xl font-extrabold leading-tight mb-8">
                 Plan Your <span class="text-blue-400">Dream Trip</span>
                 with Smart Artificial Intelligence
             </h1>
 
-            <p class="text-gray-300 text-xl leading-relaxed mb-10">
+            <p class="text-gray-300 text-base md:text-xl leading-relaxed mb-10">
                 Create personalized travel itineraries,
                 discover hotels, calculate budgets,
                 and explore destinations with AI assistance.
             </p>
 
-            <div class="flex gap-5">
+            <div class="flex flex-col sm:flex-row gap-4">
                 <a href="/trip"
                    class="bg-blue-500 hover:bg-blue-600 px-8 py-4 rounded-2xl text-lg font-bold transition hover:scale-105 shadow-xl shadow-blue-500/30">
                     Start Planning 🚀
@@ -74,10 +73,10 @@
             </div>
 
             <!-- STATS -->
-            <div class="flex gap-12 mt-16">
+            <div class="grid grid-cols-3 gap-4 md:gap-12 mt-12 md:mt-16">
 
                 <div>
-                    <h2 class="text-4xl font-bold text-blue-400">10K+</h2>
+                    <h2 class="text-2xl md:text-4xl font-bold text-blue-400">
                     <p class="text-gray-400">Trips Generated</p>
                 </div>
 
@@ -148,9 +147,9 @@
 <!-- FEATURES -->
 <section id="features" class="py-24 bg-gray-900">
 
-    <div class="max-w-7xl mx-auto px-10">
+    <div class="max-w-7xl mx-auto px-4 md:px-10">
 
-        <h2 class="text-5xl font-bold text-center mb-16">
+        <h2 class="text-3xl md:text-5xl font-bold text-center mb-16">
             Smart AI Features 🚀
         </h2>
 
@@ -180,7 +179,7 @@
 <!-- CTA -->
 <section class="py-24 bg-gradient-to-r from-blue-700 to-indigo-800 text-center">
 
-    <h2 class="text-5xl font-bold mb-6">
+    <h2 class="text-3xl md:text-5xl font-bold mb-6">
         Start Your AI Journey Today ✈️
     </h2>
 
